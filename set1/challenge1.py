@@ -1,17 +1,15 @@
-import string
+import base64
 
 def parseHex(s):
-    return int(s, base=16)
+    """Converts string s from hexidecimal to bytes object."""
 
-def convertBase64(n):
-    baseTable = string.ascii_uppercase + string.ascii_lowercase + "0123456789+/"
+    return bytes.fromhex(s)
 
-    if n < 64:
-        return baseTable[n]
-   
-    return convertBase64(n // 64) + baseTable[n % 64]
+def convertBase64(b):
+    """Encodes a bytes object in base 64."""
+    return base64.b64encode(b)
 
 if __name__ == "__main__":
     s = "49276d206b696c6c696e6720796f757220627261696e206c696b65206120706f69736f6e6f7573206d757368726f6f6d"
-    hexed = parseHex(s)
-    print(convertBase64(hexed))
+    data = parseHex(s)
+    print(convertBase64(data).decode())

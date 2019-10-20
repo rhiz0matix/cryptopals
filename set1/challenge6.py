@@ -21,8 +21,8 @@ def binEditDistance(b1, b2):
 
     # the number of ones in b1 ^ b2 is the binary edit distance
     numOfOnes = 0
-    for i in range(len(b1)):
-        numOfOnes += oneCounter(b1[i] ^ b2[i])
+    for i, b in enumerate(b1):
+        numOfOnes += oneCounter(b ^ b2[i])
 
     for byte in b2[len(b1):]:
         numOfOnes += oneCounter(byte)

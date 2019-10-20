@@ -1,10 +1,12 @@
-from challenge1v2 import parseHex
-from challenge1v2 import convertBase64
+from challenge1 import parseHex
+from challenge1 import convertBase64
 import binascii
 
-def xor(arr1, arr2):
+def xor(bytes1, bytes2):
     """Takes XOR of two byte arrays."""
-    return bytes(map(lambda x, y: x ^ y, arr1, arr2))
+    #return bytes(map(lambda x, y: x ^ y, arr1, arr2))
+    zipped = zip(bytes1, bytes2)
+    return bytes([x ^ y for (x, y) in zipped])
 
 if __name__ == "__main__":
     s1 = "1c0111001f010100061a024b53535009181c"

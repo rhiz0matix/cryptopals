@@ -8,28 +8,8 @@ def grabBytes(filename):
     contents.replace("\n", "")
     return base64.b64decode(contents)
 
-def repeatKeyXor(inputBytes, key):
-    outputBytes = b""
-    for i, byte in enumerate(inputBytes):
-        position = i % len(key)
-        outputBytes += bytes([byte ^ key[position]])
-    return outputBytes
-
-def split(inputBytes, length):
-    outputList = []
-    for i in range(0, len(inputBytes), length):
-        outputList.append(inputBytes[i : i + length])
-    return outputList
-
-def repeatKeyXorList(bytesList, key):
-    decodedBlocks = map(lambda x : repeatKeyXor(x, key), bytesList)
-
-    outputBytes = b""
-    for block in decodedBlocks:
-        outputBytes += block
-    return outputBytes
-
 def aes128ecb(inputBytes, key):
+    """Decrypts inputBytes using key with the AES-128 ECB algorithm."""
     cipher = AES.new(key, AES.MODE_ECB)
     plaintext = cipher.decrypt(inputBytes)
     return plaintext
