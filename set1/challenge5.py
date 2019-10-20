@@ -7,7 +7,6 @@ def repeatingKeyXor(inputBytes, key):
     for byte in inputBytes:
         position = i % len(key)
         outputBytes += bytes([byte ^ key[position]])
-        #print(byte ^ key[position])
         i += 1
     return outputBytes
 
