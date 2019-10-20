@@ -59,29 +59,45 @@ def freqCounter(inputBytes):
             counter[byte] = 1
     return counter
 
+def countRepeatChunks(inputBytes, length):
+    chunks = [inputBytes[i : i + length] for i in range(0, len(inputBytes), length)]
+    chunks = sorted(chunks)
+    
+    mostRepeats = 0
+    prevIndex = 0
+    for i, chunk in enumerate(chunks):
+        repeats = 0
+        if chunks[prevIndex] != chunk:
+            repeats = i - prevIndex
+            prevIndex = i
+
+            if repeats > mostRepeats:
+                mostRepeats = repeats
+    return mostRepeats
+
 if __name__ == "__main__":
     bytelist = grabByteList("8.txt")
     keySize = 16
 
-    bestScore = 1024
+    mostChunks = 0
     bestLine = b""
     for line in bytelist:
-        score = keySizeScore(line, keySize)
-        if score < bestScore:
-            bestScore = score
+        count = countRepeatChunks(line, keySize)
+        if count > mostChunks:
+            mostChunks = count
             bestLine = line
 
-    print(len(bestLine))
-    splitLine = splitBytes(bestLine, keySize)
-    transposeLine = transpose(splitLine, keySize)
-    key = b""
-    for chunk in transposeLine:
-        d, c, s = aesSingleCharBrute(chunk)
-        key += bytes([c])
-
-    freqs = freqCounter(bestLine)
-    sortedFreqs = sorted([(freqs[b], b) for b in freqs])
-    #print(sortedFreqs)
     print(bestLine)
+    #splitLine = splitBytes(bestLine, keySize)
+    #transposeLine = transpose(splitLine, keySize)
+    #key = b""
+    #for chunk in transposeLine:
+    #    d, c, s = aesSingleCharBrute(chunk)
+    #    key += bytes([c])
+
+    #freqs = freqCounter(bestLine)
+    #sortedFreqs = sorted([(freqs[b], b) for b in freqs])
+    ##print(sortedFreqs)
+    #print(bestLine)
     #print(key)
     #print(aes128ecb(bestLine, key))
