@@ -8,7 +8,7 @@ def grabBytes(filename):
     contents.replace("\n", "")
     return base64.b64decode(contents)
 
-def aes128ecb(inputBytes, key):
+def aes128ecb_dec(inputBytes, key):
     """Decrypts inputBytes using key with the AES-128 ECB algorithm."""
     cipher = AES.new(key, AES.MODE_ECB)
     plaintext = cipher.decrypt(inputBytes)
